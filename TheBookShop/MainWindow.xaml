@@ -1,0 +1,148 @@
+﻿<Window x:Class="TheBookShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheBookShop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="homeBtn">
+            <Setter Property="Background" Value="#467805"/>
+            <Setter Property="Foreground" Value="white"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="10 0"/>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="categoryPage">
+            <Setter Property="Margin" Value="0 5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="bookOption">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <TabControl x:Name="BSTabControl">
+            <TabItem Header="Home" x:Name="HomeTab">
+                <StackPanel>
+                    <StackPanel x:Name="loginSP" Visibility="Visible">
+                        <materialDesign:Snackbar x:Name="SnackBarRegister" Height="40" MessageQueue="{materialDesign:MessageQueue}"/>
+                        <TextBlock Text="Login" FontSize="30"></TextBlock>
+                        <TextBox x:Name="usernameTxtBox" materialDesign:HintAssist.Hint="Username" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="25"/>
+                        <PasswordBox x:Name="passwordTxtBox" materialDesign:HintAssist.Hint="Password" Style="{DynamicResource MaterialDesignOutlinedPasswordFieldPasswordBox}" FontSize="25"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 10">
+                            <Button Style="{StaticResource homeBtn}" Click="Login">Login</Button>
+                            <Button Style="{StaticResource homeBtn}" Click="Register">Register</Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="homeSP" Visibility="Hidden">
+                        
+                    </StackPanel>
+                    <StackPanel x:Name="adminSP" Visibility="Hidden">
+                        <TabControl x:Name="adminTabControl">
+                            <TabItem Header="Category" x:Name="CategoryTab">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <TextBox x:Name="catnmTxtBox" materialDesign:HintAssist.Hint="Add Category" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="15"/>
+                                        <Button Style="{StaticResource homeBtn}" Content="ADD"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <ComboBox x:Name="subcatnmComboBox" materialDesign:HintAssist.Hint="Delete Category" Style="{DynamicResource MaterialDesignDataGridComboBox}" FontSize="15">
+                                            <ListBox ItemsSource="{Binding Path=categoryTables}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Path=cat_nm}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </ComboBox>
+                                        <Button Style="{StaticResource homeBtn}" Content="DELETE"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Books" x:Name="BooksTab">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <TextBox x:Name="bnmTxtBox" materialDesign:HintAssist.Hint="Book Name" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <ComboBox x:Name="catnmComboBox" materialDesign:HintAssist.Hint="Category" Style="{DynamicResource MaterialDesignDataGridComboBox}" FontSize="15">
+                                            <ListBox ItemsSource="{Binding Path=categoryTables}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Path=cat_nm}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <TextBox x:Name="descTxtBox" materialDesign:HintAssist.Hint="Description" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <TextBox x:Name="pubTxtBox" materialDesign:HintAssist.Hint="Publisher" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Style="{StaticResource categoryPage}">
+                                        <TextBox x:Name="editTxtBox" materialDesign:HintAssist.Hint="Edition" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="15"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource homeBtn}" Content="ADD"/>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Logout" x:Name="logoutTAB">
+                                <Button Style="{StaticResource ResourceKey=homeBtn}" Content="Logout" Click="Logout"/>
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Register" x:Name="RegisterTab">
+                <StackPanel>
+                    <materialDesign:Snackbar x:Name="SnackBarRegister2" Height="40" MessageQueue="{materialDesign:MessageQueue}"/>
+
+                    <TextBlock Text="Registration" FontSize="15"></TextBlock>
+                    <TextBox x:Name="fnmTxtBox" materialDesign:HintAssist.Hint="Full Name" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="10"/>
+                    <TextBox x:Name="unmTxtBox" materialDesign:HintAssist.Hint="User Name" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="10"/>
+                    <PasswordBox x:Name="pswTxtBox" materialDesign:HintAssist.Hint="Password" Style="{DynamicResource MaterialDesignOutlinedPasswordFieldPasswordBox}" FontSize="10"/>
+                    <PasswordBox x:Name="psw2TxtBox" materialDesign:HintAssist.Hint="Confirm Password" Style="{DynamicResource MaterialDesignOutlinedPasswordFieldPasswordBox}" FontSize="10"/>
+                    <TextBlock FontSize="10">
+                        Gender:
+                        <RadioButton x:Name="male" GroupName="gender" Checked="Gender_Checked">Male</RadioButton>
+                        <RadioButton x:Name="female" GroupName="gender" Checked="Gender_Checked">Female</RadioButton>
+                    </TextBlock>
+                    <TextBox x:Name="emailTxtBox" materialDesign:HintAssist.Hint="Email" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="10"/>
+                    <TextBox x:Name="contactTxtBox" materialDesign:HintAssist.Hint="Contact" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="10"/>
+                    <TextBox x:Name="cityTxtBox" materialDesign:HintAssist.Hint="City" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="10"/>
+                    <Grid Margin="0 10">
+                        <Button Style="{StaticResource homeBtn}" Click="CreateUser">Register</Button>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Contact" x:Name="ContactTab">
+                <TextBlock FontSize="50">Муха цеце 88005553535</TextBlock>
+            </TabItem>
+            <TabItem Header="About Us" x:Name="AboutUsTab">
+                <StackPanel>
+                    <TextBlock FontSize="25">Our Books</TextBlock>
+                    <ListBox ItemsSource="{Binding Path=bookTables}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Path=b_img}"/>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=b_nm}" Style="{StaticResource bookOption}"/>
+                                        <TextBlock Text="{Binding Path=b_publisher}" Style="{StaticResource bookOption}"/>
+                                        <TextBlock Text="{Binding Path=b_edition}" Style="{StaticResource bookOption}"/>
+                                        <TextBlock Text="{Binding Path=b_page}" Style="{StaticResource bookOption}"/>
+                                        <TextBlock Text="{Binding Path=b_price}" Style="{StaticResource bookOption}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="View Cart" x:Name="ViewCartTab"></TabItem>
+        </TabControl>
+    </StackPanel>
+</Window>
